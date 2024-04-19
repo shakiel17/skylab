@@ -34,9 +34,12 @@
 
     <body style="background: url(<?=base_url();?>design/images/skylabbackground.jpg) no-repeat; background-size: cover;">
 
-        <div class="container">
-            <div class="row">
+        <div class="container">            
+            <div class="row">                
                 <div class="col-md-4 col-md-offset-4">
+                <center>
+                <h1 style="color:white;">Skylab Booking System</h1>
+                </center>
                     <div class="login-panel panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Please Sign In</h3>
