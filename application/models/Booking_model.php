@@ -4,7 +4,7 @@
         public function __construct(){
             $this->load->database();
         }
-        public function admin_authenticate(){
+        public function admin_authentication(){
             $username=$this->input->post('username');
             $password=$this->input->post('password');
             $result=$this->db->query("SELECT * FROM `admin` WHERE username='$username' AND password='$password'");
