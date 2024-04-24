@@ -140,5 +140,70 @@
         }
         //===========================Admin Module==========================
 
+        //===========================User Module===========================
+        public function register_user(){
+            $page = "register";
+            if(!file_exists(APPPATH.'views/pages/'.$page.".php")){
+                show_404();
+            }            
+            $this->load->view('pages/'.$page);  
+        }
+        public function save_user(){
+            $fullname=$this->input->post('fullname');            
+            $username=$this->input->post('username');
+            $register=$this->Booking_model->save_user();
+            if($register){
+                $user_data=array(
+                    'username' => $user['username'],
+                    'fullname' => $user['fullname'],
+                    'user_login' => true
+                );
+                $this->session->set_userdata($user_data);
+                redirect(base_url()."user_main");
+            }else{
+                echo "<script>alert('Unable to save user!');window.location='".base_url()."';</script>";
+            }
+        }
+        public function user_authentication(){
+            $user=$this->Booking_model->user_authentication();
+            if($user){
+                $user_data=array(
+                    'username' => $user['username'],
+                    'fullname' => $user['fullname'],
+                    'user_login' => true
+                );
+                $this->session->set_userdata($user_data);
+                redirect(base_url()."user_main");
+            }else{
+                echo "<script>alert('Invalid username and password!');window.location='".base_url()."';</script>";
+            }
+        }
+        public function user_main(){
+            $page = "main";
+            if(!file_exists(APPPATH.'views/pages/'.$page.".php")){
+                show_404();
+            }
+            if($this->session->user_login){
+                
+            }else{
+                redirect(base_url());
+            }
+            $data['commuters'] = $this->Booking_model->getAllCommuters();
+            $data['riders'] = $this->Booking_model->getAllRiders();
+            $this->load->view('templates/header');
+            $this->load->view('templates/navbar');
+            $this->load->view('templates/sidebar');
+            $this->load->view('pages/'.$page,$data);
+            $this->load->view('templates/modal');
+            $this->load->view('templates/footer');
+        }
+        public function user_logout(){
+            $this->session->unset_userdata('username');
+            $this->session->unset_userdata('fullname');
+            $this->session->unset_userdata('user_login');
+            redirect(base_url());
+        }
+        //===========================User Module===========================
+
     }
 ?>

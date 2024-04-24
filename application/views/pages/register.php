@@ -42,24 +42,33 @@
                 </center>
                     <div class="login-panel panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Please Sign In</h3>
+                            <h3 class="panel-title">Please fill all required fields</h3>
                         </div>
                         <div class="panel-body">
-                            <?=form_open(base_url()."user_authentication");?>
+                            <?=form_open(base_url()."save_user");?>
                                 <fieldset>
                                     <div class="form-group">
-                                        <input class="form-control" placeholder="Username" name="username" type="text" autofocus required>
+                                        <input class="form-control" placeholder="Full Name" name="fullname" type="text" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea name="address" class="form-control" rows="3" placeholder="Address"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="Contact No." name="contactno" type="text" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="Username" name="username" type="text" required>
                                     </div>
                                     <div class="form-group">
                                         <input class="form-control" placeholder="Password" name="password" type="password" value="" required>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                        Not yet a member? <a href="<?=base_url();?>register_user">Register here</a>
+                                        Already a member? <a href="<?=base_url();?>">Login</a>
                                         </label>
                                     </div>
                                     <!-- Change this to a button or input when using this as a form -->
-                                    <button type="submit" class="btn btn-lg btn-success btn-block">Login</button>
+                                    <button type="submit" class="btn btn-lg btn-success btn-block">Register</button>
                                 </fieldset>
                             <?=form_close();?>
                         </div>

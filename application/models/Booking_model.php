@@ -80,5 +80,34 @@
             $result=$this->db->query("SELECT * FROM commuter");
             return $result->result_array();
         }
+        public function save_user(){
+            $fullname=$this->input->post('fullname');
+            $address=$this->input->post('address');
+            $contactno=$this->input->post('contactno');
+            $username=$this->input->post('username');
+            $password=$this->input->post('password');
+            $check=$this->db->query("SELECT * FROM commuter WHERE username='$username'");
+            if($check->num_rows() > 0){
+                return false;
+            }else{
+                $result=$this->db->query("INSERT INTO commuter(fullname,`address`,contactno,username,`password`) VALUES('$fullname','$address','$contactno','$username','$password')");
+            }
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        public function user_authentication(){
+            $username=$this->input->post('username');
+            $password=$this->input->post('password');
+            $result=$this->db->query("SELECT * FROM commuter WHERE username='$username' AND password='$password'");
+            if($result->num_rows()>0){
+                return $result->row_array();
+            }else{
+                return false;
+            }
+        }
     }
+
 ?>
