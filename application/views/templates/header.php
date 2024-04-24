@@ -15,6 +15,10 @@
 
         <!-- MetisMenu CSS -->
         <link href="<?=base_url();?>design/css/metisMenu.min.css" rel="stylesheet">
+         <!-- DataTables CSS -->
+         <link href="<?=base_url();?>design/css/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+        <!-- DataTables Responsive CSS -->
+        <link href="<?=base_url();?>design/css/dataTables/dataTables.responsive.css" rel="stylesheet">
 
         <!-- Timeline CSS -->
         <link href="<?=base_url();?>design/css/timeline.css" rel="stylesheet">
@@ -36,3 +40,5 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
+<body>
+<div id="wrapper">

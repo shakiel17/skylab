@@ -50,6 +50,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 //===================Admin Module====================
+$route['manage_commuter'] = 'pages/manage_commuter';
+$route['view_license_image/(:any)'] = 'pages/view_license_image/$1';
+$route['save_license'] = 'pages/save_license';
+$route['delete_rider/(:any)'] = 'pages/delete_rider/$1';
+$route['save_rider'] = 'pages/save_rider';
+$route['manage_rider'] = 'pages/manage_rider';
 $route['admin_logout'] = 'pages/admin_logout';
 $route['admin_main'] = 'pages/admin_main';
 $route['admin_authentication'] = 'pages/admin_authentication';
