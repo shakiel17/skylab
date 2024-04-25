@@ -91,11 +91,11 @@
             }
             redirect(base_url()."manage_rider");
         }
-        public function fetch_single_rider(){
-            $id=$this->input->post('id');
-            $data=$this->Booking_model->fetch_single_rider($id);
-            echo json_encode($data);
-        }
+        // public function fetch_single_rider(){
+        //     $id=$this->input->post('id');
+        //     $data=$this->Booking_model->fetch_single_rider($id);
+        //     echo json_encode($data);
+        // }
         public function delete_rider($id){
             $save=$this->Booking_model->delete_rider($id);
             if($save){
@@ -202,6 +202,113 @@
             $this->session->unset_userdata('fullname');
             $this->session->unset_userdata('user_login');
             redirect(base_url());
+        }
+        public function user_profile(){
+            $page = "profile";
+            if(!file_exists(APPPATH.'views/pages/'.$page.".php")){
+                show_404();
+            }
+            if($this->session->user_login){
+                
+            }else{
+                redirect(base_url());
+            }
+            $data['title'] = 'User Profile';
+            $data['profile'] = $this->Booking_model->getUserProfile();
+            $data['bookings'] = $this->Booking_model->getAllBookingsByUser($data['profile']['id']);
+            $this->load->view('templates/header');
+            $this->load->view('templates/navbar');
+            $this->load->view('templates/sidebar');
+            $this->load->view('pages/'.$page,$data);
+            $this->load->view('templates/modal');
+            $this->load->view('templates/footer');
+        }
+        public function save_valid_id(){
+            $save=$this->Booking_model->save_valid_id();
+            if($save){
+                $this->session->set_flashdata('success','Valid ID successfully saved!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to save valid ID!');
+            }
+            redirect(base_url()."user_profile");
+        }
+        public function save_user_account(){
+            $save=$this->Booking_model->save_user_account();
+            if($save){
+                $this->session->set_flashdata('success','User Account successfully saved!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to save user account!');
+            }
+            redirect(base_url()."user_profile");
+        }
+        public function save_user_profile(){
+            $save=$this->Booking_model->save_user_profile();
+            if($save){
+                $this->session->set_flashdata('success','User Profile successfully saved!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to save user profile!');
+            }
+            redirect(base_url()."user_profile");
+        }
+        public function user_booking(){
+            $page = "bookings";
+            if(!file_exists(APPPATH.'views/pages/'.$page.".php")){
+                show_404();
+            }
+            if($this->session->user_login){
+                
+            }else{
+                redirect(base_url());
+            }
+            $data['title'] = 'My Bookings';
+            $profile = $this->Booking_model->getUserProfile();
+            $data['bookings'] = $this->Booking_model->getAllBookingsByUser($profile['id']);
+            $data['commuter_id']=$profile['id'];
+            $this->load->view('templates/header');
+            $this->load->view('templates/navbar');
+            $this->load->view('templates/sidebar');
+            $this->load->view('pages/'.$page,$data);
+            $this->load->view('templates/modal');
+            $this->load->view('templates/footer');
+        }
+
+        public function add_booking($id){
+            $page = "add_booking";
+            if(!file_exists(APPPATH.'views/pages/'.$page.".php")){
+                show_404();
+            }
+            if($this->session->user_login){
+                
+            }else{
+                redirect(base_url());
+            }
+            $data['title'] = 'New Booking';
+            $data['commuter_id'] = $id;
+            $data['riders'] = $this->Booking_model->getAllActiveRiders();
+            $this->load->view('templates/header');
+            $this->load->view('templates/navbar');
+            $this->load->view('templates/sidebar');
+            $this->load->view('pages/'.$page,$data);
+            $this->load->view('templates/modal');
+            $this->load->view('templates/footer');
+        }
+        public function save_booking(){
+            $save=$this->Booking_model->save_booking();
+            if($save){
+                $this->session->set_flashdata('success','Your booking was successfull!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to save booking!');
+            }
+            redirect(base_url()."user_booking");
+        }
+        public function cancel_user_booking($id){
+            $save=$this->Booking_model->cancel_booking($id);
+            if($save){
+                $this->session->set_flashdata('success','Your booking was successfully cancelled!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to cancel booking!');
+            }
+            redirect(base_url()."user_booking");
         }
         //===========================User Module===========================
 

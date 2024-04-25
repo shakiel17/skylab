@@ -25,23 +25,22 @@
                                 <div class="panel-heading">
                                     <table border="0" width="100%" cellspacing="0" cellpadding="0">
                                         <tr>
-                                            <td>List of Riders</td>
-                                            <td align="right"><a href="#" class="btn btn-primary btn-sm addRider" data-toggle="modal" data-target="#ManageRider">Add Rider</a></td>
+                                            <td>Booking History</td>
+                                            <td align="right"><a href="<?=base_url();?>add_booking/<?=$commuter_id;?>" class="btn btn-primary btn-sm">New Booking</a></td>
                                         </tr>
                                     </table>                                    
                                 </div>
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
                                     <div class="table-responsive">
-                                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                        <table class="table table-bordered table-hover" id="dataTables-example">
                                             <thead>
                                                 <tr>
                                                     <th>No.</th>
-                                                    <th>License</th>
-                                                    <th>Full Name</th>
-                                                    <th>Address</th>
-                                                    <th>Contact #</th>
-                                                    <th>Plate #</th>
+                                                    <th>Rider</th>
+                                                    <th>Origin</th>
+                                                    <th>Destination</th>
+                                                    <th>Date/Time Booked</th>
                                                     <th>Status</th>
                                                     <th width="10%">Action</th>
                                                 </tr>
@@ -49,24 +48,33 @@
                                             <tbody>
                                                 <?php
                                                 $x=1;
-                                                foreach($riders as $item){
-                                                    if($item['license']==""){
-                                                        $license="<a href='#' class='btn btn-info btn-sm addLicense' data-toggle='modal' data-target='#manageLicense' data-id='$item[id]'><i class='fa fa-picture'>Add License</i></a>";
-                                                    }else{
-                                                        $license="<a href='#' class='addLicense' data-toggle='modal' data-target='#manageLicense' data-id='$item[id]'><img src='data:image/jpg;charset=utf8;base64,".base64_encode($item['license'])."' width='70'></a><br><a href='".base_url()."view_license_image/$item[id]' target='_blank'>View Image</a>";
+                                                foreach($bookings as $item){
+                                                    $color="";
+                                                    if($item['status']=="pending"){
+                                                        $color="style='background-color:pink;'";
                                                     }
-                                                    echo "<tr>";
+                                                    if($item['status']=="confirmed"){
+                                                        $color="style='background-color:yellow;'";
+                                                    }
+                                                    if($item['status']=="completed"){
+                                                        $color="style='background-color:cyan;'";
+                                                    }
+                                                    if($item['status']=="cancel"){
+                                                        $color="style='background-color:red;'";
+                                                    }
+                                                    echo "<tr $color>";
                                                         echo "<td align='center'>$x.</td>";
-                                                        echo "<td align='center'>$license</td>";
                                                         echo "<td>$item[fullname]</td>";
-                                                        echo "<td>$item[address]</td>";
-                                                        echo "<td>$item[contactno]</td>";
-                                                        echo "<td>$item[plateno]</td>";
+                                                        echo "<td>$item[loc_origin]</td>";
+                                                        echo "<td>$item[loc_destination]</td>";
+                                                        echo "<td>".date('m/d/Y',strtotime($item['book_date']))." ".date('h:i A',strtotime($item['book_time']))."</td>";
                                                         echo "<td>$item[status]</td>";
-                                                        echo "<td><a href='#' class='btn btn-warning btn-sm editRider' data-toggle='modal' data-target='#ManageRider' data-id='$item[id]_$item[fullname]_$item[address]_$item[contactno]_$item[plateno]_$item[status]'><i class='fa fa-edit'></i> Edit</a>";
-                                                        ?>
-                                                        <a href="<?=base_url();?>delete_rider/<?=$item['id'];?>" class="btn btn-danger btn-sm" onclick="return confirm('Do you wish to delete this record?');return false;"><i class="fa fa-trash"></i> Delete</a>
+                                                        echo "<td>";
+                                                        if($item['status']=="pending"){
+                                                        ?>                                                        
+                                                        <a href="<?=base_url();?>cancel_user_booking/<?=$item['id'];?>" class="btn btn-danger btn-sm" onclick="return confirm('Do you wish to cancel this booking?');return false;"><i class="fa fa-trash"></i> Cancel</a>
                                                         <?php
+                                                        }
                                                         echo "</td>";
                                                     echo "</tr>";
                                                     $x++;

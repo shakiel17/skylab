@@ -28,6 +28,33 @@
                     responsive: true
                 });
             });
-        </script>        
+        </script> 
+        <script>
+        $('.addVID').click(function () {
+            var id= $(this).data('id');
+            document.getElementById("valid_id").value=id;
+        });
+        $('.editUserAccount').click(function () {
+            var data= $(this).data('id');
+            var id= data.split('_');
+            document.getElementById("user_id").value=id[0];
+            document.getElementById("user_username").value=id[1];
+            document.getElementById("user_password").value=id[2];
+        });
+        $('.editUserProfile').click(function () {
+            var data= $(this).data('id');
+            var id= data.split('_');
+            document.getElementById("prof_id").value=id[0];
+            document.getElementById("prof_name").value=id[1];
+            document.getElementById("prof_address").value=id[2];
+            document.getElementById("prof_contactno").value=id[3];
+        });
+        $('.addBooking').click(function () {
+            var data= $(this).data('id');
+            var id= data.split('_');
+            document.getElementById("book_commuter_id").value=id[0];
+            document.getElementById("book_rider_id").value=id[1];            
+        });
+        </script>       
     </body>
 </html>

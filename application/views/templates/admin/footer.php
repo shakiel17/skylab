@@ -40,21 +40,14 @@
                 document.getElementById('rider_status').value='Active';
             });
             $('.editRider').click(function(){
-                var id=$(this).data('id');
-                document.getElementById('rider_id').value=id;
-                $.ajax({
-                    url:'<?=base_url();?>index.php/pages/fetch_single_rider',
-                    type:'post',
-                    data: {id:id},
-                    dataType: 'json',
-                    success: function(response){                
-                        document.getElementById('rider_fullname').value=response[0]['fullname'];
-                        document.getElementById('rider_address').value=response[0]['address'];
-                        document.getElementById('rider_contactno').value=response[0]['contactno'];
-                        document.getElementById('rider_plateno').value=response[0]['plateno'];
-                        document.getElementById('rider_status').value=response[0]['status'];
-                    }
-                });
+                var data=$(this).data('id');
+                var id = data.split('_');
+                document.getElementById('rider_id').value=id[0];                  
+                document.getElementById('rider_fullname').value=id[1];
+                document.getElementById('rider_address').value=id[2];
+                document.getElementById('rider_contactno').value=id[3];
+                document.getElementById('rider_plateno').value=id[4];
+                document.getElementById('rider_status').value=id[5];
             });
             $('.addLicense').click(function(){
                 var id=$(this).data('id');
