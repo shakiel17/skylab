@@ -49,6 +49,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
+//===================Rider Module===================
+$route['rider_logout'] = 'pages/rider_logout';
+$route['rider_main'] = 'pages/rider_main';
+$route['rider_authentication'] = 'pages/rider_authentication';
+$route['save_rider_account'] = 'pages/save_rider_account';
+$route['register_rider'] = 'pages/register_rider';
+//===================Rider Module===================
 //===================User Module====================
 $route['cancel_user_booking/(:any)'] = 'pages/cancel_user_booking/$1';
 $route['save_booking'] = 'pages/save_booking';
@@ -75,6 +82,7 @@ $route['admin_logout'] = 'pages/admin_logout';
 $route['admin_main'] = 'pages/admin_main';
 $route['admin_authentication'] = 'pages/admin_authentication';
 //===================Admin Module====================
+$route['rider'] = 'pages/rider';
 $route['admin'] = 'pages/admin';
 $route['default_controller'] = 'pages/index';
 $route['404_override'] = '';

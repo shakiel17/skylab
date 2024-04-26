@@ -196,6 +196,38 @@
                 return false;
             }
         }
+        public function save_rider_account(){
+            $plateno=$this->input->post('plateno');
+            $contactno=$this->input->post('contactno');
+            $username=$this->input->post('username');
+            $password=$this->input->post('password');
+            $check=$this->db->query("SELECT * FROM rider WHERE plateno='$plateno' AND contactno='$contactno' AND username <> '$username'");
+            if($check->num_rows()>0){
+                return false;
+            }else{
+                $result=$this->db->query("UPDATE rider SET username='$username',`password`='$password' WHERE plateno='$plateno' AND contactno='$contactno'");
+            }
+            if($result){
+                $query=$this->db->query("SELECT * FROM rider WHERE username='$username' AND password='$password'");
+                if($query->num_rows()>0){
+                    return $query->row_array();
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }
+        public function rider_authentication(){
+            $username=$this->input->post('username');
+            $password=$this->input->post('password');
+            $result=$this->db->query("SELECT * FROM rider WHERE username='$username' AND password='$password'");
+            if($result->num_rows()>0){
+                return $result->row_array();
+            }else{
+                return false;
+            }
+        }
     }
 
 ?>

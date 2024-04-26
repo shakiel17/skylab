@@ -154,8 +154,8 @@
             $register=$this->Booking_model->save_user();
             if($register){
                 $user_data=array(
-                    'username' => $user['username'],
-                    'fullname' => $user['fullname'],
+                    'username' => $username,
+                    'fullname' => $fullname,
                     'user_login' => true
                 );
                 $this->session->set_userdata($user_data);
@@ -311,6 +311,77 @@
             redirect(base_url()."user_booking");
         }
         //===========================User Module===========================
-
+        //===========================Rider Module==========================
+        public function rider(){
+            $page = "index";
+            if(!file_exists(APPPATH.'views/pages/rider/'.$page.".php")){
+                show_404();
+            }
+            if($this->session->rider_login){
+                redirect(base_url()."rider_main");
+            }
+            $this->load->view('pages/rider/'.$page);            
+        }
+        public function register_rider(){
+            $page = "register";
+            if(!file_exists(APPPATH.'views/pages/rider/'.$page.".php")){
+                show_404();
+            }            
+            $this->load->view('pages/rider/'.$page);  
+        }
+        public function save_rider_account(){            
+            $register=$this->Booking_model->save_rider_account();
+            if($register){
+                $user_data=array(
+                    'username' => $register['username'],
+                    'fullname' => $register['fullname'],
+                    'rider_login' => true
+                );
+                $this->session->set_userdata($user_data);
+                redirect(base_url()."rider_main");
+            }else{
+                echo "<script>alert('Unable to save user!');window.location='".base_url()."rider';</script>";
+            }
+        }
+        public function rider_authentication(){
+            $user=$this->Booking_model->rider_authentication();
+            if($user){
+                $user_data=array(
+                    'username' => $user['username'],
+                    'fullname' => $user['fullname'],
+                    'rider_login' => true
+                );
+                $this->session->set_userdata($user_data);
+                redirect(base_url()."rider_main");
+            }else{
+                echo "<script>alert('Invalid username and password!');window.location='".base_url()."rider';</script>";
+            }
+        }
+        public function rider_main(){
+            $page = "main";
+            if(!file_exists(APPPATH.'views/pages/rider/'.$page.".php")){
+                show_404();
+            }
+            if($this->session->rider_login){
+                
+            }else{
+                redirect(base_url()."rider");
+            }
+            $data['commuters'] = $this->Booking_model->getAllCommuters();
+            $data['riders'] = $this->Booking_model->getAllRiders();
+            $this->load->view('templates/header');
+            $this->load->view('templates/rider/navbar');
+            $this->load->view('templates/rider/sidebar');
+            $this->load->view('pages/rider/'.$page,$data);
+            $this->load->view('templates/rider/modal');
+            $this->load->view('templates/rider/footer');
+        }
+        public function rider_logout(){
+            $this->session->unset_userdata('username');
+            $this->session->unset_userdata('fullname');
+            $this->session->unset_userdata('rider_login');
+            redirect(base_url()."rider");
+        }
+        //===========================Rider Module==========================
     }
 ?>
