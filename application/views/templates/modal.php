@@ -1,3 +1,18 @@
+<style>
+    .google-map {
+     padding-bottom: 50%;
+     position: relative;
+}
+
+.google-map iframe {
+     height: 100%;
+     width: 100%;
+     left: 0;
+     top: 0;
+     position: absolute;
+}
+    </style>
+
 <div class="modal fade" id="logout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
@@ -117,7 +132,7 @@
                 <div class="form-group">
                     <label>Destination</label>
                     <textarea name="destination" class="form-control" rows="3"></textarea>
-                </div>
+                </div>                    
                 <div class="form-group">
                     <label>Date</label>
                     <input type="date" name="book_date" class="form-control" required>
