@@ -15,7 +15,7 @@
                                             <i class="fa fa-comments fa-5x"></i>
                                         </div>
                                         <div class="col-xs-9 text-right">
-                                            <div class="huge">26</div>
+                                            <div class="huge"><?=count($pending);?></div>
                                             <div>Pending Bookings!</div>
                                         </div>
                                     </div>
@@ -38,7 +38,7 @@
                                             <i class="fa fa-tasks fa-5x"></i>
                                         </div>
                                         <div class="col-xs-9 text-right">
-                                            <div class="huge">12</div>
+                                            <div class="huge"><?=count($confirmed);?></div>
                                             <div>Confirmed Bookings!</div>
                                         </div>
                                     </div>

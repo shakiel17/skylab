@@ -30,7 +30,18 @@
             });
         </script> 
         <script>
-        
+            $('.confirmBooking').click(function(){
+                var id=$(this).data('id');
+                document.getElementById("confirm_id").value = id;
+            });
+            $('.cancelBooking').click(function(){
+                var id=$(this).data('id');
+                document.getElementById("cancel_id").value = id;
+            });
+            $('.completeBooking').click(function(){
+                var id=$(this).data('id');
+                document.getElementById("complete_id").value = id;
+            });
         </script>       
     </body>
 </html>

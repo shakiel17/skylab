@@ -15,12 +15,12 @@
                                             <i class="fa fa-comments fa-5x"></i>
                                         </div>
                                         <div class="col-xs-9 text-right">
-                                            <div class="huge">26</div>
+                                            <div class="huge"><?=count($pending);?></div>
                                             <div>Pending Bookings!</div>
                                         </div>
                                     </div>
                                 </div>
-                                <a href="#">
+                                <a href="<?=base_url();?>rider_booking">
                                     <div class="panel-footer">
                                         <span class="pull-left">View Details</span>
                                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -38,12 +38,12 @@
                                             <i class="fa fa-tasks fa-5x"></i>
                                         </div>
                                         <div class="col-xs-9 text-right">
-                                            <div class="huge">12</div>
+                                            <div class="huge"><?=count($confirmed);?></div>
                                             <div>Confirmed Bookings!</div>
                                         </div>
                                     </div>
                                 </div>
-                                <a href="#">
+                                <a href="<?=base_url();?>rider_booking">
                                     <div class="panel-footer">
                                         <span class="pull-left">View Details</span>
                                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

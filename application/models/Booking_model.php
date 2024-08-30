@@ -117,6 +117,14 @@
             $result=$this->db->query("SELECT b.*,r.fullname FROM bookings b LEFT JOIN rider r ON r.id=b.rider_id WHERE b.commuter_id='$id'");
             return $result->result_array();
         }
+        public function getAllBookingsByUserType($id,$type){            
+            $result=$this->db->query("SELECT b.*,r.fullname FROM bookings b LEFT JOIN rider r ON r.id=b.rider_id WHERE b.commuter_id='$id' AND b.status='$type'");
+            return $result->result_array();
+        }
+        public function getAllBookingsByType($type){            
+            $result=$this->db->query("SELECT b.*,r.fullname FROM bookings b LEFT JOIN rider r ON r.id=b.rider_id WHERE b.status='$type'");
+            return $result->result_array();
+        }
         public function save_valid_id(){
             $id=$this->input->post('id');
             $fileName=basename($_FILES["file"]["name"]);
@@ -188,14 +196,15 @@
                 return false;
             }
         }
-        public function cancel_booking($id){
-            $result=$this->db->query("UPDATE bookings SET `status` = 'cancel' WHERE id='$id'");
+        public function update_booking($id,$type){
+            $result=$this->db->query("UPDATE bookings SET `status` = '$type' WHERE id='$id'");
             if($result){
                 return true;
             }else{
                 return false;
             }
         }
+        
         public function save_rider_account(){
             $plateno=$this->input->post('plateno');
             $contactno=$this->input->post('contactno');
@@ -227,6 +236,26 @@
             }else{
                 return false;
             }
+        }
+
+        public function getRiderProfile(){
+            $username=$this->session->username;
+            $result=$this->db->query("SELECT * FROM rider WHERE username='$username'");
+            return $result->row_array();
+        }
+
+        public function getAllRiderBookings($id){            
+            $result=$this->db->query("SELECT b.*,c.fullname FROM bookings b LEFT JOIN commuter c ON c.id=b.commuter_id WHERE b.rider_id='$id'");
+            return $result->result_array();
+        }
+        public function getAllRiderBookingsType($id,$type){            
+            $result=$this->db->query("SELECT b.*,c.fullname FROM bookings b LEFT JOIN commuter c ON c.id=b.commuter_id WHERE b.rider_id='$id' AND b.status='$type'");
+            return $result->result_array();
+        }
+
+        public function getAllBookings(){            
+            $result=$this->db->query("SELECT b.*,r.fullname as rider,c.fullname as commuter FROM bookings b LEFT JOIN rider r ON r.id=b.rider_id LEFT JOIN commuter c ON c.id=b.commuter_id ORDER BY b.datearray DESC");
+            return $result->result_array();
         }
     }
 

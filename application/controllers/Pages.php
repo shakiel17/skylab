@@ -47,8 +47,10 @@
                 
             }else{
                 redirect(base_url()."admin");
-            }
+            }            
             $data['commuters'] = $this->Booking_model->getAllCommuters();
+            $data['pending'] = $this->Booking_model->getAllBookingsByType("pending");
+            $data['confirmed'] = $this->Booking_model->getAllBookingsByType("confirmed");
             $data['riders'] = $this->Booking_model->getAllRiders();
             $this->load->view('templates/header');
             $this->load->view('templates/admin/navbar');
@@ -138,6 +140,26 @@
             $this->load->view('templates/admin/modal');
             $this->load->view('templates/admin/footer');
         }
+
+        public function manage_booking(){
+            $page = "manage_booking";
+            if(!file_exists(APPPATH.'views/pages/admin/'.$page.".php")){
+                show_404();
+            }
+            if($this->session->admin_login){
+                
+            }else{
+                redirect(base_url()."admin");
+            }
+            $data['title'] = 'Booking Manager';
+            $data['bookings'] = $this->Booking_model->getAllBookings();
+            $this->load->view('templates/header');
+            $this->load->view('templates/admin/navbar');
+            $this->load->view('templates/admin/sidebar');
+            $this->load->view('pages/admin/'.$page,$data);            
+            $this->load->view('templates/admin/modal');
+            $this->load->view('templates/admin/footer');
+        }
         //===========================Admin Module==========================
 
         //===========================User Module===========================
@@ -188,7 +210,10 @@
             }else{
                 redirect(base_url());
             }
+            $profile=$this->Booking_model->getUserProfile();
             $data['commuters'] = $this->Booking_model->getAllCommuters();
+            $data['pending'] = $this->Booking_model->getAllBookingsByUserType($profile['id'],"pending");
+            $data['confirmed'] = $this->Booking_model->getAllBookingsByUserType($profile['id'],"confirmed");
             $data['riders'] = $this->Booking_model->getAllRiders();
             $this->load->view('templates/header');
             $this->load->view('templates/navbar');
@@ -301,8 +326,9 @@
             }
             redirect(base_url()."user_booking");
         }
-        public function cancel_user_booking($id){
-            $save=$this->Booking_model->cancel_booking($id);
+        public function cancel_user_booking(){
+            $id=$this->input->post('id');
+            $save=$this->Booking_model->update_booking($id,"cancel");
             if($save){
                 $this->session->set_flashdata('success','Your booking was successfully cancelled!');
             }else{
@@ -367,8 +393,11 @@
             }else{
                 redirect(base_url()."rider");
             }
+            $profile=$this->Booking_model->getRiderProfile();
             $data['commuters'] = $this->Booking_model->getAllCommuters();
             $data['riders'] = $this->Booking_model->getAllRiders();
+            $data['pending'] = $this->Booking_model->getAllRiderBookingsType($profile['id'],"pending");
+            $data['confirmed'] = $this->Booking_model->getAllRiderBookingsType($profile['id'],"confirmed");
             $this->load->view('templates/header');
             $this->load->view('templates/rider/navbar');
             $this->load->view('templates/rider/sidebar');
@@ -381,6 +410,56 @@
             $this->session->unset_userdata('fullname');
             $this->session->unset_userdata('rider_login');
             redirect(base_url()."rider");
+        }
+        public function rider_booking(){
+            $page = "bookings";
+            if(!file_exists(APPPATH.'views/pages/rider/'.$page.".php")){
+                show_404();
+            }
+            if($this->session->rider_login){
+                
+            }else{
+                redirect(base_url()."rider");
+            }
+            $data['title'] = 'My Bookings';
+            $profile = $this->Booking_model->getRiderProfile();
+            $data['bookings'] = $this->Booking_model->getAllRiderBookings($profile['id']); 
+            $this->load->view('templates/header');
+            $this->load->view('templates/rider/navbar');
+            $this->load->view('templates/rider/sidebar');
+            $this->load->view('pages/rider/'.$page,$data);
+            $this->load->view('templates/rider/modal');
+            $this->load->view('templates/rider/footer');
+        }
+        public function confirm_rider_booking(){
+            $id=$this->input->post('id');
+            $confirm=$this->Booking_model->update_booking($id,"confirmed");            
+            if($confirm){
+                $this->session->set_flashdata('success','Booking successfully confirmed!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to update booking status!');
+            }            
+            redirect(base_url()."rider_booking");
+        }
+        public function cancel_rider_booking(){
+            $id=$this->input->post('id');
+            $confirm=$this->Booking_model->update_booking($id,"cancel");            
+            if($confirm){
+                $this->session->set_flashdata('success','Booking successfully cancelled!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to cancel booking!');
+            }            
+            redirect(base_url()."rider_booking");
+        }
+        public function complete_booking(){
+            $id=$this->input->post('id');
+            $confirm=$this->Booking_model->update_booking($id,"completed");            
+            if($confirm){
+                $this->session->set_flashdata('success','Booking successfully completed!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to update booking status!');
+            }            
+            redirect(base_url()."rider_booking");
         }
         //===========================Rider Module==========================
     }

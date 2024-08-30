@@ -50,6 +50,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 //===================Rider Module===================
+$route['complete_booking'] = 'pages/complete_booking';
+$route['cancel_rider_booking'] = 'pages/cancel_rider_booking';
+$route['confirm_rider_booking'] = 'pages/confirm_rider_booking';
+$route['rider_booking'] = 'pages/rider_booking';
 $route['rider_logout'] = 'pages/rider_logout';
 $route['rider_main'] = 'pages/rider_main';
 $route['rider_authentication'] = 'pages/rider_authentication';
@@ -57,7 +61,7 @@ $route['save_rider_account'] = 'pages/save_rider_account';
 $route['register_rider'] = 'pages/register_rider';
 //===================Rider Module===================
 //===================User Module====================
-$route['cancel_user_booking/(:any)'] = 'pages/cancel_user_booking/$1';
+$route['cancel_user_booking'] = 'pages/cancel_user_booking';
 $route['save_booking'] = 'pages/save_booking';
 $route['add_booking/(:any)'] = 'pages/add_booking/$1';
 $route['user_booking'] = 'pages/user_booking';
@@ -72,6 +76,7 @@ $route['save_user'] = 'pages/save_user';
 $route['register_user'] = 'pages/register_user';
 //===================User Module====================
 //===================Admin Module====================
+$route['manage_booking'] = 'pages/manage_booking';
 $route['manage_commuter'] = 'pages/manage_commuter';
 $route['view_license_image/(:any)'] = 'pages/view_license_image/$1';
 $route['save_license'] = 'pages/save_license';

@@ -55,6 +55,11 @@
             document.getElementById("book_commuter_id").value=id[0];
             document.getElementById("book_rider_id").value=id[1];            
         });
+
+        $('.cancelBooking').click(function(){
+                var id=$(this).data('id');
+                document.getElementById("cancel_id").value = id;
+            });
         </script>       
     </body>
 </html>

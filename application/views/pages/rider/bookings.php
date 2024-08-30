@@ -26,7 +26,7 @@
                                     <table border="0" width="100%" cellspacing="0" cellpadding="0">
                                         <tr>
                                             <td>Booking History</td>
-                                            <td align="right"><a href="<?=base_url();?>add_booking/<?=$commuter_id;?>" class="btn btn-primary btn-sm">New Booking</a></td>
+                                            <td></td>
                                         </tr>
                                     </table>                                    
                                 </div>
@@ -37,12 +37,12 @@
                                             <thead>
                                                 <tr>
                                                     <th>No.</th>
-                                                    <th>Rider</th>
+                                                    <th>Commuter Name</th>
                                                     <th>Origin</th>
                                                     <th>Destination</th>
                                                     <th>Date/Time Booked</th>
                                                     <th>Status</th>
-                                                    <th width="10%">Action</th>
+                                                    <th width="15%">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -51,10 +51,10 @@
                                                 foreach($bookings as $item){
                                                     $color="";
                                                     if($item['status']=="pending"){
-                                                        $color="style='background-color:pink;'";
+                                                        $color="style='background-color:pink;'";                                                      
                                                     }
                                                     if($item['status']=="confirmed"){
-                                                        $color="style='background-color:yellow;'";
+                                                        $color="style='background-color:yellow;'";                                                        
                                                     }
                                                     if($item['status']=="completed"){
                                                         $color="style='background-color:cyan;'";
@@ -71,10 +71,16 @@
                                                         echo "<td>$item[status]</td>";
                                                         echo "<td>";
                                                         if($item['status']=="pending"){
-                                                        ?>                                                        
-                                                        <a href="#" class="btn btn-danger btn-sm cancelBooking" data-toggle="modal" data-target="#CancelBooking" data-id="<?=$item['id'];?>"><i class="fa fa-trash"></i> Cancel</a>
+                                                        ?>                                                                                                              
+                                                        <a href="#" class="btn btn-success btn-sm confirmBooking" data-toggle="modal" data-target="#ConfirmBooking" data-id="<?=$item['id'];?>"><i class="fa fa-thumbs-up"></i> Confirm</a>
+                                                        <a href="#" class="btn btn-danger btn-sm cancelBooking" data-toggle="modal" data-target="#CancelBooking" data-id="<?=$item['id'];?>"><i class="fa fa-trash"></i> Cancel</a>                                                        
                                                         <?php
-                                                        }
+                                                        } 
+                                                        if($item['status']=="confirmed"){
+                                                            ?>                                                            
+                                                                <a href="" class="btn btn-info btn-sm completeBooking" data-toggle="modal" data-target="#CompleteBooking" data-id="<?=$item['id'];?>"><i class="fa fa-exchange"></i> Complete</a>
+                                                            <?php
+                                                            }                                                                                                                                                      
                                                         echo "</td>";
                                                     echo "</tr>";
                                                     $x++;
