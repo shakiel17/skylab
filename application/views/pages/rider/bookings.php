@@ -62,11 +62,12 @@
                                                     if($item['status']=="cancel"){
                                                         $color="style='background-color:red;'";
                                                     }
+                                                    $dist=str_replace(' ','+',$item['loc_destination']);
                                                     echo "<tr $color>";
                                                         echo "<td align='center'>$x.</td>";
                                                         echo "<td>$item[fullname]</td>";
                                                         echo "<td>$item[loc_origin]</td>";
-                                                        echo "<td>$item[loc_destination]</td>";
+                                                        echo "<td><a href='https://www.google.com/maps/dir//$dist' target='_blank'>$item[loc_destination]</a></td>";
                                                         echo "<td>".date('m/d/Y',strtotime($item['book_date']))." ".date('h:i A',strtotime($item['book_time']))."</td>";
                                                         echo "<td>$item[status]</td>";
                                                         echo "<td>";
