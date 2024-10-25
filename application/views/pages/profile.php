@@ -38,7 +38,7 @@
                                     <small class="text-muted"><a href="#" class="editUserAccount" data-toggle="modal" data-target="#updateUserAccount" data-id="<?=$profile['id'];?>_<?=$profile['username'];?>_<?=$profile['password'];?>">@<?=$profile['username'];?></a></small>
                                 </div>
                                 <div class="options">
-                                    <a href="#" class="btn btn-primary editUserProfile" data-toggle="modal" data-target="#EditUserProfile" data-id="<?=$profile['id'];?>_<?=$profile['fullname'];?>_<?=$profile['address'];?>_<?=$profile['contactno'];?>"><i class="glyphicon glyphicon-edit"></i> Edit Profile</a>
+                                    <a href="#" class="btn btn-primary editUserProfile" data-toggle="modal" data-target="#EditUserProfile" data-id="<?=$profile['id'];?>_<?=$profile['fullname'];?>_<?=$profile['address'];?>_<?=$profile['contactno'];?>_<?=$profile['email'];?>"><i class="glyphicon glyphicon-edit"></i> Edit Profile</a>
                                 </div>
                             </div>
                         </div>
@@ -70,6 +70,8 @@
                                             <p><b><?=$profile['address'];?></b></p>
                                             <h5>Contact No.</h5>
                                             <p><b><?=$profile['contactno'];?></b></p>
+                                            <h5>Email Address</h5>
+                                            <p><b><?=$profile['email'];?></b></p>
                                         </div>
                                         <div class="tab-pane fade" id="profile">
                                             <h4>Booking History</h4>

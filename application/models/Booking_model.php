@@ -86,11 +86,12 @@
             $contactno=$this->input->post('contactno');
             $username=$this->input->post('username');
             $password=$this->input->post('password');
+            $email=$this->input->post('email');
             $check=$this->db->query("SELECT * FROM commuter WHERE username='$username'");
             if($check->num_rows() > 0){
                 return false;
             }else{
-                $result=$this->db->query("INSERT INTO commuter(fullname,`address`,contactno,username,`password`) VALUES('$fullname','$address','$contactno','$username','$password')");
+                $result=$this->db->query("INSERT INTO commuter(fullname,`address`,contactno,username,`password`,email) VALUES('$fullname','$address','$contactno','$username','$password','$email')");
             }
             if($result){
                 return true;
@@ -164,7 +165,8 @@
             $fullname=$this->input->post('fullname');
             $address=$this->input->post('address');
             $contactno=$this->input->post('contactno');
-            $result=$this->db->query("UPDATE commuter SET fullname='$fullname',`address`='$address',contactno='$contactno' WHERE id = '$id'");            
+            $email=$this->input->post('email');
+            $result=$this->db->query("UPDATE commuter SET fullname='$fullname',`address`='$address',contactno='$contactno',email='$email' WHERE id = '$id'");            
             if($result){
                 return true;
             }else{
@@ -256,6 +258,10 @@
         public function getAllBookings(){            
             $result=$this->db->query("SELECT b.*,r.fullname as rider,c.fullname as commuter FROM bookings b LEFT JOIN rider r ON r.id=b.rider_id LEFT JOIN commuter c ON c.id=b.commuter_id ORDER BY b.datearray DESC");
             return $result->result_array();
+        }
+        public function getSingleBooking($id){
+            $result=$this->db->query("SELECT b.loc_origin,b.loc_destination,c.fullname,c.email,r.fullname as rider FROM bookings b INNER JOIN commuter c ON c.id=b.commuter_id INNER JOIN rider r ON r.id=b.rider_id WHERE b.id='$id'");
+            return $result->row_array();
         }
     }
 

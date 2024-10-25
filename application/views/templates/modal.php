@@ -104,6 +104,10 @@
                     <label>Contact No.</label>
                     <input type="text" name="contactno" class="form-control" id="prof_contactno" required>
                 </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" class="form-control" id="prof_email" required>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

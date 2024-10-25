@@ -433,7 +433,36 @@
         }
         public function confirm_rider_booking(){
             $id=$this->input->post('id');
-            $confirm=$this->Booking_model->update_booking($id,"confirmed");            
+            $com=$this->Booking_model->getSingleBooking($id);
+            $commuter=$com['fullname'];
+            $rider=$com['rider'];
+            $email=$com['email'];
+            $from=$com['loc_origin'];
+            $to=$com['loc_destination'];
+            $message="Hello, $commuter! Your booking is confirmed by $rider with the details:            
+            Origin: $from
+            Destination: $to";
+            $subject="Booking Confirmed!";
+
+            $config = array(
+                'protocol' => 'smtp',
+                'smtp_host' => 'ssl://smtp.googlemail.com',
+                'smtp_port' => 465,
+                'smtp_user' => 'easykill.aboy@gmail.com',
+                'smtp_pass' => 'ngfpdqyrfvoffhur',
+                'mailtype' => 'text',
+                'charset' => 'iso-8859-1',
+                'wordwrap' => TRUE
+            );
+            $this->load->library('email',$config);
+            $this->email->set_newline("\r\n");
+            $this->email->from('Online Skylab Booking');
+            $this->email->to($email);
+            $this->email->subject($subject);
+            $this->email->message($message);
+            if($this->email->send()){
+                $confirm=$this->Booking_model->update_booking($id,"confirmed"); 
+            }           
             if($confirm){
                 $this->session->set_flashdata('success','Booking successfully confirmed!');
             }else{
@@ -443,7 +472,34 @@
         }
         public function cancel_rider_booking(){
             $id=$this->input->post('id');
-            $confirm=$this->Booking_model->update_booking($id,"cancel");            
+            $com=$this->Booking_model->getSingleBooking($id);
+            $commuter=$com['fullname'];
+            $rider=$com['rider'];
+            $email=$com['email'];
+            $from=$com['loc_origin'];
+            $to=$com['loc_destination'];
+            $message="Hello, $commuter! I regret to inform you that your booking was cancelled by $rider for some reasons! Sorry for the inconvenience.";
+            $subject="Booking Cancelled!";
+
+            $config = array(
+                'protocol' => 'smtp',
+                'smtp_host' => 'ssl://smtp.googlemail.com',
+                'smtp_port' => 465,
+                'smtp_user' => 'easykill.aboy@gmail.com',
+                'smtp_pass' => 'ngfpdqyrfvoffhur',
+                'mailtype' => 'text',
+                'charset' => 'iso-8859-1',
+                'wordwrap' => TRUE
+            );
+            $this->load->library('email',$config);
+            $this->email->set_newline("\r\n");
+            $this->email->from('Online Skylab Booking');
+            $this->email->to($email);
+            $this->email->subject($subject);
+            $this->email->message($message);
+            if($this->email->send()){
+                $confirm=$this->Booking_model->update_booking($id,"cancel");            
+            }
             if($confirm){
                 $this->session->set_flashdata('success','Booking successfully cancelled!');
             }else{
@@ -453,7 +509,34 @@
         }
         public function complete_booking(){
             $id=$this->input->post('id');
-            $confirm=$this->Booking_model->update_booking($id,"completed");            
+            $com=$this->Booking_model->getSingleBooking($id);
+            $commuter=$com['fullname'];
+            $rider=$com['rider'];
+            $email=$com['email'];
+            $from=$com['loc_origin'];
+            $to=$com['loc_destination'];
+            $message="Hello, $commuter! Thank  you for the support and hoping to serve you more in the future.";
+            $subject="Booking Completed!";
+
+            $config = array(
+                'protocol' => 'smtp',
+                'smtp_host' => 'ssl://smtp.googlemail.com',
+                'smtp_port' => 465,
+                'smtp_user' => 'easykill.aboy@gmail.com',
+                'smtp_pass' => 'ngfpdqyrfvoffhur',
+                'mailtype' => 'text',
+                'charset' => 'iso-8859-1',
+                'wordwrap' => TRUE
+            );
+            $this->load->library('email',$config);
+            $this->email->set_newline("\r\n");
+            $this->email->from('Online Skylab Booking');
+            $this->email->to($email);
+            $this->email->subject($subject);
+            $this->email->message($message);
+            if($this->email->send()){
+                $confirm=$this->Booking_model->update_booking($id,"completed");            
+            }
             if($confirm){
                 $this->session->set_flashdata('success','Booking successfully completed!');
             }else{

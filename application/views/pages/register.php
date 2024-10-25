@@ -57,6 +57,9 @@
                                         <input class="form-control" placeholder="Contact No." name="contactno" type="text" required>
                                     </div>
                                     <div class="form-group">
+                                        <input class="form-control" placeholder="Email Address" name="email" type="email" required>
+                                    </div>
+                                    <div class="form-group">
                                         <input class="form-control" placeholder="Username" name="username" type="text" required>
                                     </div>
                                     <div class="form-group">

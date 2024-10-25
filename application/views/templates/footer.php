@@ -48,6 +48,7 @@
             document.getElementById("prof_name").value=id[1];
             document.getElementById("prof_address").value=id[2];
             document.getElementById("prof_contactno").value=id[3];
+            document.getElementById("prof_email").value=id[4];
         });
         $('.addBooking').click(function () {
             var data= $(this).data('id');
