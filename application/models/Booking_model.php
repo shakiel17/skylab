@@ -114,6 +114,10 @@
             $result=$this->db->query("SELECT * FROM commuter WHERE username='$username'");
             return $result->row_array();
         }
+        public function getUserProfileByUser($username){            
+            $result=$this->db->query("SELECT * FROM commuter WHERE username='$username'");
+            return $result->row_array();
+        }
         public function getAllBookingsByUser($id){            
             $result=$this->db->query("SELECT b.*,r.fullname FROM bookings b LEFT JOIN rider r ON r.id=b.rider_id WHERE b.commuter_id='$id'");
             return $result->result_array();
@@ -262,6 +266,22 @@
         public function getSingleBooking($id){
             $result=$this->db->query("SELECT b.loc_origin,b.loc_destination,c.fullname,c.email,r.fullname as rider FROM bookings b INNER JOIN commuter c ON c.id=b.commuter_id INNER JOIN rider r ON r.id=b.rider_id WHERE b.id='$id'");
             return $result->row_array();
+        }
+        public function getAllUserReviews($username){
+            $result=$this->db->query("SELECT * FROM reviews WHERE username='$username' ORDER BY datearray DESC");
+            return $result->result_array();
+        }
+        public function save_reviews(){
+            $username=$this->session->username;
+            $message=$this->input->post('message');
+            $date=date('Y-m-d');
+            $time=date('H:i:s');
+            $result=$this->db->query("INSERT INTO reviews(username,`message`,datearray,timearray) VALUES('$username','$message','$date','$time')");
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
         }
     }
 

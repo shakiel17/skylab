@@ -160,6 +160,47 @@
             $this->load->view('templates/admin/modal');
             $this->load->view('templates/admin/footer');
         }
+        public function view_reviews($username){
+            $page = "reviews";
+            if(!file_exists(APPPATH.'views/pages/admin/'.$page.".php")){
+                show_404();
+            }
+            if($this->session->admin_login){
+                
+            }else{
+                redirect(base_url()."admin");
+            }
+            $data['title'] = 'Comments/Reviews';
+            $data['reviews'] = $this->Booking_model->getAllUserReviews($username);
+            $this->load->view('templates/header');
+            $this->load->view('templates/admin/navbar');
+            $this->load->view('templates/admin/sidebar');
+            $this->load->view('pages/admin/'.$page,$data);            
+            $this->load->view('templates/admin/modal');
+            $this->load->view('templates/admin/footer');
+        }
+
+        public function view_commuter_profile($username){
+            $page = "profile";
+            if(!file_exists(APPPATH.'views/pages/'.$page.".php")){
+                show_404();
+            }
+           if($this->session->admin_login){
+                
+            }else{
+                redirect(base_url());
+            }
+            $data['title'] = 'User Profile';
+            $data['profile'] = $this->Booking_model->getUserProfileByUser($username);
+            $data['bookings'] = $this->Booking_model->getAllBookingsByUser($data['profile']['id']);
+            $data['reviews'] = $this->Booking_model->getAllUserReviews($username);
+            $this->load->view('templates/header');
+            $this->load->view('templates/admin/navbar');
+            $this->load->view('templates/admin/sidebar');
+            $this->load->view('pages/admin/'.$page,$data);
+            $this->load->view('templates/admin/modal');
+            $this->load->view('templates/admin/footer');
+        }
         //===========================Admin Module==========================
 
         //===========================User Module===========================
@@ -235,12 +276,15 @@
             }
             if($this->session->user_login){
                 
+            }else if($this->session->admin_login){
+                
             }else{
                 redirect(base_url());
             }
             $data['title'] = 'User Profile';
             $data['profile'] = $this->Booking_model->getUserProfile();
             $data['bookings'] = $this->Booking_model->getAllBookingsByUser($data['profile']['id']);
+            $data['reviews'] = $this->Booking_model->getAllUserReviews($this->session->username);
             $this->load->view('templates/header');
             $this->load->view('templates/navbar');
             $this->load->view('templates/sidebar');
@@ -335,6 +379,34 @@
                 $this->session->set_flashdata('failed','Unable to cancel booking!');
             }
             redirect(base_url()."user_booking");
+        }
+
+        public function user_reviews(){
+            $page = "reviews";
+            if(!file_exists(APPPATH.'views/pages/'.$page.".php")){
+                show_404();
+            }
+            if($this->session->user_login){
+                
+            }else{
+                redirect(base_url());
+            }
+            $data['title'] = 'Comments/Reviews';                        
+            $this->load->view('templates/header');
+            $this->load->view('templates/navbar');
+            $this->load->view('templates/sidebar');
+            $this->load->view('pages/'.$page,$data);
+            $this->load->view('templates/modal');
+            $this->load->view('templates/footer');
+        }
+        public function save_reviews(){            
+            $save=$this->Booking_model->save_reviews();
+            if($save){
+                $this->session->set_flashdata('success','Your reviews was successfully posted!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to post reviews!');
+            }
+            redirect(base_url()."user_reviews");
         }
         //===========================User Module===========================
         //===========================Rider Module==========================

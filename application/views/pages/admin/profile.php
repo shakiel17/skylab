@@ -35,11 +35,8 @@
                                 </div>
                                 <div class="text">
                                     <label class="text-muted"><?=$profile['fullname'];?></label><br>
-                                    <small class="text-muted"><a href="#" class="editUserAccount" data-toggle="modal" data-target="#updateUserAccount" data-id="<?=$profile['id'];?>_<?=$profile['username'];?>_<?=$profile['password'];?>">@<?=$profile['username'];?></a></small>
-                                </div>
-                                <div class="options">
-                                    <a href="#" class="btn btn-primary editUserProfile" data-toggle="modal" data-target="#EditUserProfile" data-id="<?=$profile['id'];?>_<?=$profile['fullname'];?>_<?=$profile['address'];?>_<?=$profile['contactno'];?>_<?=$profile['email'];?>"><i class="glyphicon glyphicon-edit"></i> Edit Profile</a>
-                                </div>
+                                    <small class="text-muted">@<?=$profile['username'];?></small>
+                                </div>                                
                             </div>
                         </div>
                         <div class="col-lg-6">

@@ -9,6 +9,9 @@
                         </li>
                         <li>
                             <a href="<?=base_url();?>user_booking"><i class="fa fa-calendar fa-fw"></i> Bookings</a>
+                        </li>
+                        <li>
+                            <a href="<?=base_url();?>user_reviews"><i class="fa fa-send fa-fw"></i> Comments/Reviews</a>
                         </li>                        
                     </ul>
                 </div>

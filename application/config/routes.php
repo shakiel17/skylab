@@ -61,6 +61,9 @@ $route['save_rider_account'] = 'pages/save_rider_account';
 $route['register_rider'] = 'pages/register_rider';
 //===================Rider Module===================
 //===================User Module====================
+$route['delete_reviews/(:any)'] = 'pages/delete_reviews/$1';
+$route['save_reviews'] = 'pages/save_reviews';
+$route['user_reviews'] = 'pages/user_reviews';
 $route['cancel_user_booking'] = 'pages/cancel_user_booking';
 $route['save_booking'] = 'pages/save_booking';
 $route['add_booking/(:any)'] = 'pages/add_booking/$1';
@@ -76,6 +79,8 @@ $route['save_user'] = 'pages/save_user';
 $route['register_user'] = 'pages/register_user';
 //===================User Module====================
 //===================Admin Module====================
+$route['view_commuter_profile/(:any)'] = 'pages/view_commuter_profile/$1';
+$route['view_reviews/(:any)'] = 'pages/view_reviews/$1';
 $route['manage_booking'] = 'pages/manage_booking';
 $route['manage_commuter'] = 'pages/manage_commuter';
 $route['view_license_image/(:any)'] = 'pages/view_license_image/$1';

@@ -25,7 +25,7 @@
                                 <div class="panel-heading">
                                     <table border="0" width="100%" cellspacing="0" cellpadding="0">
                                         <tr>
-                                            <td>List of Registered Commuters</td>
+                                            <td>Commuters Comments/Reviews</td>
                                             <td align="right"><!--a href="#" class="btn btn-primary btn-sm addRider" data-toggle="modal" data-target="#ManageRider">Add Rider</a--></td>
                                         </tr>
                                     </table>                                    
@@ -33,36 +33,26 @@
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
                                     <div class="table-responsive">
-                                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                        <table class="table table-bordered table-hover" id="dataTables-example">
                                             <thead>
                                                 <tr>
-                                                    <th>No.</th>
-                                                    <th>Valid ID</th>
-                                                    <th>Full Name</th>
-                                                    <th>Address</th>
-                                                    <th>Contact #</th>
-                                                    <th>Reviews</th>
-                                                    <th width="10%">Action</th>
+                                                    <th>#</th>
+                                                    <th>From</th>
+                                                    <th>Message/Comments</th>                                                    
+                                                    <th>Date / Time</th>                                                   
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
                                                 $x=1;
-                                                foreach($riders as $item){  
-                                                    $reviews=$this->Booking_model->getAllUserReviews($item['username']);
+                                                foreach($reviews as $item){  
+                                                    $qry=$this->Booking_model->db->query("SELECT * FROM commuter WHERE username='$item[username]'");
+                                                    $res=$qry->row_array();                                                   
                                                     echo "<tr>";
-                                                        echo "<td align='center'>$x.</td>";
-                                                        echo "<td align='center'></td>";
-                                                        echo "<td>$item[fullname]</td>";
-                                                        echo "<td>$item[address]</td>";
-                                                        echo "<td>$item[contactno]</td>";
-                                                        echo "<td align='center'><a href='".base_url()."view_reviews/$item[username]' class='btn btn-default'>".count($reviews)." Review/s</a></td>";
-                                                        echo "<td><!--a href='#' class='btn btn-warning btn-sm editRider' data-toggle='modal' data-target='#ManageRider' data-id='$item[id]'><i class='fa fa-edit'></i> Edit</a-->";
-                                                        ?>
-                                                        <!-- <a href="<?=base_url();?>delete_rider/<?=$item['id'];?>" class="btn btn-danger btn-sm" onclick="return confirm('Do you wish to delete this record?');return false;"><i class="fa fa-trash"></i> Delete</a> -->
-                                                        <a href="<?=base_url();?>view_commuter_profile/<?=$item['username'];?>" class="btn btn-success btn-sm"><i class="fa fa-eye"></i> View Profile</a>
-                                                        <?php
-                                                        echo "</td>";
+                                                        echo "<td align='center'>$x.</td>";                                                        
+                                                        echo "<td>$res[fullname]</td>";
+                                                        echo "<td>$item[message]</td>";
+                                                        echo "<td>".date('m/d/Y',strtotime($item['datearray']))." ".date('h:i A',strtotime($item['timearray']))."</td>";                                                        
                                                     echo "</tr>";
                                                     $x++;
                                                 }
