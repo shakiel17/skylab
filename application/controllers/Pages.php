@@ -278,6 +278,8 @@
                 
             }else if($this->session->admin_login){
                 
+            }else if($this->session->rider_login){
+                
             }else{
                 redirect(base_url());
             }
@@ -285,12 +287,23 @@
             $data['profile'] = $this->Booking_model->getUserProfile();
             $data['bookings'] = $this->Booking_model->getAllBookingsByUser($data['profile']['id']);
             $data['reviews'] = $this->Booking_model->getAllUserReviews($this->session->username);
+	if($this->session->user_login || $this->session->admin_login){	
             $this->load->view('templates/header');
             $this->load->view('templates/navbar');
             $this->load->view('templates/sidebar');
             $this->load->view('pages/'.$page,$data);
             $this->load->view('templates/modal');
             $this->load->view('templates/footer');
+	}else{
+            $data['profile'] = $this->Booking_model->getRiderProfile();
+            $data['bookings'] = $this->Booking_model->getAllBookingsByRider($data['profile']['id']);
+	    $this->load->view('templates/header');
+            $this->load->view('templates/rider/navbar');
+            $this->load->view('templates/rider/sidebar');
+            $this->load->view('pages/rider/'.$page,$data);
+            $this->load->view('templates/rider/modal');
+            $this->load->view('templates/rider/footer');
+	}
         }
         public function save_valid_id(){
             $save=$this->Booking_model->save_valid_id();
@@ -310,8 +323,26 @@
             }
             redirect(base_url()."user_profile");
         }
+	public function update_rider_account(){
+            $save=$this->Booking_model->update_rider_account();
+            if($save){
+                $this->session->set_flashdata('success','User Account successfully saved!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to save user account!');
+            }
+            redirect(base_url()."user_profile");
+        }
         public function save_user_profile(){
             $save=$this->Booking_model->save_user_profile();
+            if($save){
+                $this->session->set_flashdata('success','User Profile successfully saved!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to save user profile!');
+            }
+            redirect(base_url()."user_profile");
+        }
+	public function save_rider_profile(){
+            $save=$this->Booking_model->save_rider_profile();
             if($save){
                 $this->session->set_flashdata('success','User Profile successfully saved!');
             }else{

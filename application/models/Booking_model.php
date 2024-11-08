@@ -122,6 +122,10 @@
             $result=$this->db->query("SELECT b.*,r.fullname FROM bookings b LEFT JOIN rider r ON r.id=b.rider_id WHERE b.commuter_id='$id'");
             return $result->result_array();
         }
+	public function getAllBookingsByRider($id){            
+            $result=$this->db->query("SELECT b.*,r.fullname FROM bookings b LEFT JOIN rider r ON r.id=b.rider_id WHERE b.rider_id='$id'");
+            return $result->result_array();
+        }
         public function getAllBookingsByUserType($id,$type){            
             $result=$this->db->query("SELECT b.*,r.fullname FROM bookings b LEFT JOIN rider r ON r.id=b.rider_id WHERE b.commuter_id='$id' AND b.status='$type'");
             return $result->result_array();
@@ -164,6 +168,22 @@
                 return false;
             }
         }
+	public function update_rider_account(){
+            $id=$this->input->post('id');
+            $username=$this->input->post('username');
+            $password=$this->input->post('password');
+            $check=$this->db->query("SELECT * FROM rider WHERE username='$username' AND id <> '$id'");
+            if($check->num_rows()>0){
+                return false;
+            }else{
+                $result=$this->db->query("UPDATE rider SET username='$username',`password`='$password' WHERE id = '$id'");
+            }
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
+        }
         public function save_user_profile(){
             $id=$this->input->post('id');
             $fullname=$this->input->post('fullname');
@@ -171,6 +191,18 @@
             $contactno=$this->input->post('contactno');
             $email=$this->input->post('email');
             $result=$this->db->query("UPDATE commuter SET fullname='$fullname',`address`='$address',contactno='$contactno',email='$email' WHERE id = '$id'");            
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        public function save_rider_profile(){
+            $id=$this->input->post('id');
+            $fullname=$this->input->post('fullname');
+            $address=$this->input->post('address');
+            $contactno=$this->input->post('contactno');
+            $result=$this->db->query("UPDATE rider SET fullname='$fullname',`address`='$address',contactno='$contactno' WHERE id = '$id'");            
             if($result){
                 return true;
             }else{

@@ -42,6 +42,21 @@
                 var id=$(this).data('id');
                 document.getElementById("complete_id").value = id;
             });
+	$('.editUserProfile').click(function () {
+            var data= $(this).data('id');
+            var id= data.split('_');
+            document.getElementById("prof_id").value=id[0];
+            document.getElementById("prof_name").value=id[1];
+            document.getElementById("prof_address").value=id[2];
+            document.getElementById("prof_contactno").value=id[3];
+        });
+$('.editUserAccount').click(function () {
+            var data= $(this).data('id');
+            var id= data.split('_');
+            document.getElementById("user_id").value=id[0];
+            document.getElementById("user_username").value=id[1];
+            document.getElementById("user_password").value=id[2];
+        });
         </script>       
     </body>
 </html>
