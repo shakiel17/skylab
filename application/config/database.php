@@ -75,9 +75,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '192.168.0.183',
-	'username' => 'uploadchart',
-	'password' => 'uploadchart',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
 	'database' => 'skylab',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
