@@ -23,6 +23,7 @@
             $fullname=$this->input->post('fullname');
             $address=$this->input->post('address');
             $contactno=$this->input->post('contactno');
+            $email=$this->input->post('email');
             $plateno=$this->input->post('plateno');
             $status=$this->input->post('status');
             $check=$this->db->query("SELECT * FROM rider WHERE fullname='$fullname' AND id <> '$id'");
@@ -30,9 +31,9 @@
                 return false;
             }else{
                 if($id==""){
-                    $result=$this->db->query("INSERT INTO rider(fullname,`address`,contactno,plateno,`status`) VALUES('$fullname','$address','$contactno','$plateno','$status')");
+                    $result=$this->db->query("INSERT INTO rider(fullname,`address`,contactno,plateno,`status`,email) VALUES('$fullname','$address','$contactno','$plateno','$status','$email')");
                 }else{
-                    $result=$this->db->query("UPDATE rider SET fullname='$fullname',`address`='$address',plateno='$plateno',`status`='$status',contactno='$contactno' WHERE id='$id'");
+                    $result=$this->db->query("UPDATE rider SET fullname='$fullname',`address`='$address',plateno='$plateno',`status`='$status',contactno='$contactno',email='$email' WHERE id='$id'");
                 }
             }
             if($result){
@@ -202,7 +203,8 @@
             $fullname=$this->input->post('fullname');
             $address=$this->input->post('address');
             $contactno=$this->input->post('contactno');
-            $result=$this->db->query("UPDATE rider SET fullname='$fullname',`address`='$address',contactno='$contactno' WHERE id = '$id'");            
+            $email=$this->input->post('email');
+            $result=$this->db->query("UPDATE rider SET fullname='$fullname',`address`='$address',contactno='$contactno',email='$email' WHERE id = '$id'");            
             if($result){
                 return true;
             }else{
@@ -296,7 +298,7 @@
             return $result->result_array();
         }
         public function getSingleBooking($id){
-            $result=$this->db->query("SELECT b.loc_origin,b.loc_destination,c.fullname,c.email,r.fullname as rider FROM bookings b INNER JOIN commuter c ON c.id=b.commuter_id INNER JOIN rider r ON r.id=b.rider_id WHERE b.id='$id'");
+            $result=$this->db->query("SELECT b.loc_origin,b.loc_destination,c.fullname,c.email,r.fullname as rider,r.email as remail FROM bookings b INNER JOIN commuter c ON c.id=b.commuter_id INNER JOIN rider r ON r.id=b.rider_id WHERE b.id='$id'");
             return $result->row_array();
         }
         public function getAllUserReviews($username){
@@ -309,6 +311,32 @@
             $date=date('Y-m-d');
             $time=date('H:i:s');
             $result=$this->db->query("INSERT INTO reviews(username,`message`,datearray,timearray) VALUES('$username','$message','$date','$time')");
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        public function change_rider_status($id,$status){
+            $result=$this->db->query("UPDATE rider SET `status`='$status' WHERE id='$id'");
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        public function save_plateno(){
+            $id=$this->input->post('id');
+            $fileName=basename($_FILES["file"]["name"]);
+            $fileType=pathinfo($fileName, PATHINFO_EXTENSION);
+            $allowTypes = array('jpg','png','jpeg','gif');
+            if(in_array($fileType,$allowTypes)){
+                $image = $_FILES["file"]["tmp_name"];
+                $imgContent=addslashes(file_get_contents($image));
+                $result=$this->db->query("UPDATE rider SET `plateno_pic`='$imgContent' WHERE id='$id'");            
+            }else{
+                return false;
+            }            
             if($result){
                 return true;
             }else{

@@ -49,6 +49,7 @@
             document.getElementById("prof_name").value=id[1];
             document.getElementById("prof_address").value=id[2];
             document.getElementById("prof_contactno").value=id[3];
+            document.getElementById("prof_email").value=id[4];
         });
 $('.editUserAccount').click(function () {
             var data= $(this).data('id');
@@ -56,6 +57,14 @@ $('.editUserAccount').click(function () {
             document.getElementById("user_id").value=id[0];
             document.getElementById("user_username").value=id[1];
             document.getElementById("user_password").value=id[2];
+        });
+        $('.addLicense').click(function () {
+            var id= $(this).data('id');
+            document.getElementById("license_id").value=id;
+        });
+        $('.addPlateNo').click(function () {
+            var id= $(this).data('id');
+            document.getElementById("plateno_id").value=id;
         });
         </script>       
     </body>

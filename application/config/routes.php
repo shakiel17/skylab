@@ -50,6 +50,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 //===================Rider Module===================
+$route['save_plateno'] = 'pages/save_plateno';
+$route['save_rider_license'] = 'pages/save_rider_license';
+$route['change_rider_status/(:any)/(:any)'] = 'pages/change_rider_status/$1/$2';
 $route['update_rider_account'] = 'pages/update_rider_account';
 $route['save_rider_profile'] = 'pages/save_rider_profile';
 $route['complete_booking'] = 'pages/complete_booking';

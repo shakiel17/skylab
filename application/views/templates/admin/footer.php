@@ -38,6 +38,7 @@
                 document.getElementById('rider_contactno').value='';
                 document.getElementById('rider_plateno').value='';
                 document.getElementById('rider_status').value='Active';
+                document.getElementById('rider_email').value='';
             });
             $('.editRider').click(function(){
                 var data=$(this).data('id');
@@ -48,6 +49,7 @@
                 document.getElementById('rider_contactno').value=id[3];
                 document.getElementById('rider_plateno').value=id[4];
                 document.getElementById('rider_status').value=id[5];
+                document.getElementById('rider_email').value=id[6];
             });
             $('.addLicense').click(function(){
                 var id=$(this).data('id');

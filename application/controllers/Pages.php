@@ -284,10 +284,11 @@
                 redirect(base_url());
             }
             $data['title'] = 'User Profile';
-            $data['profile'] = $this->Booking_model->getUserProfile();
-            $data['bookings'] = $this->Booking_model->getAllBookingsByUser($data['profile']['id']);
+           
             $data['reviews'] = $this->Booking_model->getAllUserReviews($this->session->username);
 	if($this->session->user_login || $this->session->admin_login){	
+        $data['profile'] = $this->Booking_model->getUserProfile();
+        $data['bookings'] = $this->Booking_model->getAllBookingsByUser($data['profile']['id']);
             $this->load->view('templates/header');
             $this->load->view('templates/navbar');
             $this->load->view('templates/sidebar');
@@ -402,9 +403,45 @@
             redirect(base_url()."user_booking");
         }
         public function cancel_user_booking(){
-            $id=$this->input->post('id');
-            $save=$this->Booking_model->update_booking($id,"cancel");
-            if($save){
+            $id=$this->input->post('id');            
+            $com=$this->Booking_model->getSingleBooking($id);
+            $commuter=$com['fullname'];
+            $rider=$com['rider'];
+            $email=$com['email'];
+            $rider_email=$com['remail'];
+            $from=$com['loc_origin'];
+            $to=$com['loc_destination'];
+            $message="Hello, $commuter! You have successfully cancelled your booking.";
+            $subject="Booking Cancelled!";
+            $message_rider="Hello, $rider! Mr/Ms. $commuter cancelled his/her booking for a certain reasons. Sorry for the inconvenience.";
+
+            $config = array(
+                'protocol' => 'smtp',
+                'smtp_host' => 'ssl://smtp.googlemail.com',
+                'smtp_port' => 465,
+                'smtp_user' => 'easykill.aboy@gmail.com',
+                'smtp_pass' => 'ngfpdqyrfvoffhur',
+                'mailtype' => 'text',
+                'charset' => 'iso-8859-1',
+                'wordwrap' => TRUE
+            );
+            $this->load->library('email',$config);
+            $this->email->set_newline("\r\n");
+            $this->email->from('Online Skylab Booking');
+            $this->email->to($email);
+            $this->email->subject($subject);
+            $this->email->message($message);
+            if($this->email->send()){
+                $this->load->library('email',$config);
+                $this->email->set_newline("\r\n");
+                $this->email->from('Online Skylab Booking');
+                $this->email->to($rider_email);
+                $this->email->subject($subject);
+                $this->email->message($message_rider);
+                $this->email->send();
+                $confirm=$this->Booking_model->update_booking($id,"cancel");            
+            }            
+            if($confirm){
                 $this->session->set_flashdata('success','Your booking was successfully cancelled!');
             }else{
                 $this->session->set_flashdata('failed','Unable to cancel booking!');
@@ -539,6 +576,7 @@
             $com=$this->Booking_model->getSingleBooking($id);
             $commuter=$com['fullname'];
             $rider=$com['rider'];
+            $rider_email=$com['remail'];
             $email=$com['email'];
             $from=$com['loc_origin'];
             $to=$com['loc_destination'];
@@ -546,6 +584,10 @@
             Origin: $from
             Destination: $to";
             $subject="Booking Confirmed!";
+
+            $message_rider="Hello $rider! You have confirmed the booking of Mr/Ms. $commuter with the details:
+            Origin: $from
+            Destination: $to";
 
             $config = array(
                 'protocol' => 'smtp',
@@ -564,6 +606,13 @@
             $this->email->subject($subject);
             $this->email->message($message);
             if($this->email->send()){
+                $this->load->library('email',$config);
+                $this->email->set_newline("\r\n");
+                $this->email->from('Online Skylab Booking');
+                $this->email->to($rider_email);
+                $this->email->subject($subject);
+                $this->email->message($message_rider);
+                $this->email->send();
                 $confirm=$this->Booking_model->update_booking($id,"confirmed"); 
             }           
             if($confirm){
@@ -579,10 +628,12 @@
             $commuter=$com['fullname'];
             $rider=$com['rider'];
             $email=$com['email'];
+            $rider_email=$com['remail'];
             $from=$com['loc_origin'];
             $to=$com['loc_destination'];
             $message="Hello, $commuter! I regret to inform you that your booking was cancelled by $rider for some reasons! Sorry for the inconvenience.";
             $subject="Booking Cancelled!";
+            $message_rider="Hello, $rider! You have successfully cancelled the booking of Mr/Ms. $commuter.";
 
             $config = array(
                 'protocol' => 'smtp',
@@ -601,6 +652,13 @@
             $this->email->subject($subject);
             $this->email->message($message);
             if($this->email->send()){
+                $this->load->library('email',$config);
+                $this->email->set_newline("\r\n");
+                $this->email->from('Online Skylab Booking');
+                $this->email->to($rider_email);
+                $this->email->subject($subject);
+                $this->email->message($message_rider);
+                $this->email->send();
                 $confirm=$this->Booking_model->update_booking($id,"cancel");            
             }
             if($confirm){
@@ -616,10 +674,12 @@
             $commuter=$com['fullname'];
             $rider=$com['rider'];
             $email=$com['email'];
+            $rider_email=$com['remail'];
             $from=$com['loc_origin'];
             $to=$com['loc_destination'];
-            $message="Hello, $commuter! Thank  you for the support and hoping to serve you more in the future.";
+            $message="Hello, $commuter! Thank  you for the support and hoping to serve you more in the future.";            
             $subject="Booking Completed!";
+            $message_rider="Hello, $rider! Thank  you for fetching and transporting Mr/Ms. $commuter.";
 
             $config = array(
                 'protocol' => 'smtp',
@@ -638,6 +698,13 @@
             $this->email->subject($subject);
             $this->email->message($message);
             if($this->email->send()){
+                $this->load->library('email',$config);
+                $this->email->set_newline("\r\n");
+                $this->email->from('Online Skylab Booking');
+                $this->email->to($rider_email);
+                $this->email->subject($subject);
+                $this->email->message($message_rider);
+                $this->email->send();
                 $confirm=$this->Booking_model->update_booking($id,"completed");            
             }
             if($confirm){
@@ -646,6 +713,33 @@
                 $this->session->set_flashdata('failed','Unable to update booking status!');
             }            
             redirect(base_url()."rider_booking");
+        }
+        public function change_rider_status($id,$status){            
+            $save=$this->Booking_model->change_rider_status($id,$status);
+            if($save){
+                $this->session->set_flashdata('success','Rider status successfully updated!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to update rider status!');
+            }
+            redirect(base_url()."user_profile");
+        }
+        public function save_rider_license(){
+            $save=$this->Booking_model->save_license();
+            if($save){
+                $this->session->set_flashdata('success','Rider license successfully saved!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to save rider license!');
+            }
+            redirect(base_url()."user_profile");
+        }
+        public function save_plateno(){
+            $save=$this->Booking_model->save_plateno();
+            if($save){
+                $this->session->set_flashdata('success','Rider plate number successfully uploaded!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to upload plate number!');
+            }
+            redirect(base_url()."user_profile");
         }
         //===========================Rider Module==========================
     }

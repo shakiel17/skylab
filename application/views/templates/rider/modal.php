@@ -99,6 +99,10 @@
                 <div class="form-group">
                     <label>Contact No.</label>
                     <input type="text" name="contactno" class="form-control" id="prof_contactno" required>
+                </div>
+                <div class="form-group">
+                    <label>Contact No.</label>
+                    <input type="email" name="email" class="form-control" id="prof_email" required>
                 </div>                
             </div>
             <div class="modal-footer">
@@ -127,6 +131,53 @@
                     <label>Password</label>
                     <input type="password" name="password" class="form-control" id="user_password" required>
                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <?=form_close();?>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="AddLicense" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <?=form_open_multipart(base_url()."save_rider_license");?>
+            <input type="hidden" name="id" id="license_id">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">License Upload</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>License</label>
+                    <input type="file" name="file" class="form-control" required>
+                </div>                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <?=form_close();?>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="AddPlateNo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <?=form_open_multipart(base_url()."save_plateno");?>
+            <input type="hidden" name="id" id="plateno_id">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Plate No Upload</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Plate No.</label>
+                    <input type="file" name="file" class="form-control" required>
+                </div>                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -22,27 +22,38 @@
                             <div class="hero-widget well well-sm">
                                 <div class="icon">
                                     <?php
-                                    /*if($profile['valid_id']==""){
+                                    if($profile['license']==""){
                                     ?>
-                                    <a href="#" data-toggle="modal" data-target="#AddVID" data-id="<?=$profile['id'];?>" class="addVID"><i class="glyphicon glyphicon-user"></i></a>
+                                    <a href="#" data-toggle="modal" data-target="#AddLicense" data-id="<?=$profile['id'];?>" class="addLicense"><i class="glyphicon glyphicon-user"></i></a>
                                     <?php
                                     }else{
                                         ?>
-                                        <a href="#" data-toggle="modal" data-target="#AddVID" data-id="<?=$profile['id'];?>" class="addVID"><img src="data:image/jpg;charset=utf8;base64,<?=base64_encode($profile['valid_id']);?>" width='100'></a>
+                                        <a href="#" data-toggle="modal" data-target="#AddLicense" data-id="<?=$profile['id'];?>" class="addLicense"><img src="data:image/jpg;charset=utf8;base64,<?=base64_encode($profile['license']);?>" width='100'></a>
                                         <?php
-                                    }*/				
+                                    }			
                                     ?>
-<img src="data:image/jpg;charset=utf8;base64,<?=base64_encode($profile['license']);?>" width='100'>
+                                
                                 </div>
                                 <div class="text">
                                     <label class="text-muted"><?=$profile['fullname'];?></label><br>
                                     <small class="text-muted"><a href="#" class="editUserAccount" data-toggle="modal" data-target="#updateUserAccount" data-id="<?=$profile['id'];?>_<?=$profile['username'];?>_<?=$profile['password'];?>">@<?=$profile['username'];?></a></small>
                                 </div>
                                 <div class="options">
-                                    <a href="#" class="btn btn-primary editUserProfile" data-toggle="modal" data-target="#EditUserProfile" data-id="<?=$profile['id'];?>_<?=$profile['fullname'];?>_<?=$profile['address'];?>_<?=$profile['contactno'];?>"><i class="glyphicon glyphicon-edit"></i> Edit Profile</a>
+                                    <a href="#" class="btn btn-primary editUserProfile" data-toggle="modal" data-target="#EditUserProfile" data-id="<?=$profile['id'];?>_<?=$profile['fullname'];?>_<?=$profile['address'];?>_<?=$profile['contactno'];?>_<?=$profile['email'];?>"><i class="glyphicon glyphicon-edit"></i> Edit Profile</a>
                                 </div>
 <div class="options">
                                     <?=$profile['status'];?>
+                                    <?php
+                                    if($profile['status']=="Active"){
+                                        $stat="Set to Inactive";
+                                        $status="Inactive";
+                                    }else{
+                                        $stat="Set to Active";
+                                        $status="Active";
+                                    }
+                                    ?>
+                                    <br>
+                                    <a href="<?=base_url();?>change_rider_status/<?=$profile['id'];?>/<?=$status;?>" class="btn btn-warning btn-sm" onclick="return confirm('Do you wish to change your status?');return false;"><?=$stat;?></a></td>
                                 </div>
                             </div>
                         </div>
@@ -58,10 +69,10 @@
                                         <li class="active"><a href="#home" data-toggle="tab">Profile</a>
                                         </li>
                                         <li><a href="#profile" data-toggle="tab">Bookings</a>
-                                        </li>
-                                        <!--li><a href="#messages" data-toggle="tab">Reviews</a>
-                                        </li-->
+                                        </li>                                        
                                         <li><a href="#settings" data-toggle="tab">User Account</a>
+                                        </li>
+                                        <li><a href="#messages" data-toggle="tab">Plate No.</a>
                                         </li>
                                     </ul>
 
@@ -73,9 +84,11 @@
                                             <h5>Address</h5>
                                             <p><b><?=$profile['address'];?></b></p>
                                             <h5>Contact No.</h5>
-                                            <p><b><?=$profile['contactno'];?></b></p>
-                                            <!--h5>Email Address</h5>
-                                            <p><b><?=$profile['email'];?></b></p-->
+                                            <p><b><?=$profile['contactno'];?></b></p>                                            
+                                            <h5>Email Address</h5>
+                                            <p><b><?=$profile['email'];?></b></p>
+                                            <h5>Plate No.</h5>
+                                            <p><b><?=$profile['plateno'];?></b></p>
                                         </div>
                                         <div class="tab-pane fade" id="profile">
                                             <h4>Booking History</h4>
@@ -105,21 +118,24 @@
                                             </table>
                                         </div>
                                         <div class="tab-pane fade" id="messages">
-                                            <h4>Customer Reviews</h4>
+                                            <h4>Rider Plate No</h4>
                                             <p>
                                                 <table width="100%" border="0">
                                                     <tr>
-                                                        <td>Comments</td>
-                                                        <td>Date/Time</td>
-                                                    </tr>
-                                                    <?php
-                                                    foreach($reviews as $item){
-                                                        echo "<tr>";
-                                                            echo "<td>$item[message]</td>";
-                                                            echo "<td>".date('m/d/Y',strtotime($item['datearray']))." ".date('h:i A',strtotime($item['timearray']))."</td>";
-                                                        echo "</tr>";
-                                                    }
-                                                    ?>
+                                                        <td>
+                                                            <?php
+                                                            if($profile['plateno_pic']==""){
+                                                                ?>
+                                                                <a href="#" class="btn btn-primary btn-sm addPlateNo" data-toggle="modal" data-target="#AddPlateNo" data-id="<?=$profile['id'];?>">Add Plate No</a>
+                                                                <?php
+                                                            }else{
+                                                                ?>
+                                                                <a href="#" class="addPlateNo" data-toggle="modal" data-target="#AddPlateNo" data-id="<?=$profile['id'];?>"><img src="data:image/jpg;charset=utf8;base64,<?=base64_encode($profile['plateno_pic']);?>" width='100'></a>
+                                                                <?php
+                                                            }
+                                                            ?>
+                                                        </td>                                                        
+                                                    </tr>                                                    
                                                 </table>
                                             </p>
                                         </div>

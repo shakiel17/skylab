@@ -39,6 +39,10 @@
                     <input type="text" class="form-control" name="contactno" id="rider_contactno" placeholder="09XXXXXXXXX" required>
                 </div>
                 <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" name="email" id="rider_email" placeholder="myname@gmail.com" required>
+                </div>
+                <div class="form-group">
                     <label>Plate No.</label>
                     <input type="text" class="form-control" name="plateno" id="rider_plateno" required>
                 </div>

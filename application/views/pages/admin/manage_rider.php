@@ -41,6 +41,7 @@
                                                     <th>Full Name</th>
                                                     <th>Address</th>
                                                     <th>Contact #</th>
+                                                    <th>Email</th>
                                                     <th>Plate #</th>
                                                     <th>Status</th>
                                                     <th width="10%">Action</th>
@@ -61,9 +62,10 @@
                                                         echo "<td>$item[fullname]</td>";
                                                         echo "<td>$item[address]</td>";
                                                         echo "<td>$item[contactno]</td>";
+                                                        echo "<td>$item[email]</td>";
                                                         echo "<td>$item[plateno]</td>";
                                                         echo "<td>$item[status]</td>";
-                                                        echo "<td><a href='#' class='btn btn-warning btn-sm editRider' data-toggle='modal' data-target='#ManageRider' data-id='$item[id]_$item[fullname]_$item[address]_$item[contactno]_$item[plateno]_$item[status]'><i class='fa fa-edit'></i> Edit</a>";
+                                                        echo "<td><a href='#' class='btn btn-warning btn-sm editRider' data-toggle='modal' data-target='#ManageRider' data-id='$item[id]_$item[fullname]_$item[address]_$item[contactno]_$item[plateno]_$item[status]_$item[email]'><i class='fa fa-edit'></i> Edit</a>";
                                                         ?>
                                                         <a href="<?=base_url();?>delete_rider/<?=$item['id'];?>" class="btn btn-danger btn-sm" onclick="return confirm('Do you wish to delete this record?');return false;"><i class="fa fa-trash"></i> Delete</a>
                                                         <?php
